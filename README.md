@@ -16,55 +16,25 @@ Bu proje bir temel örnek niteliğindedir. Gerçek projelerde UI bileşenleri ç
 🧩 Kullanılan Yapılar
 
 Server tarafından gönderilebilecek örnek UI tanımı:
-
-List<Map<String, dynamic>> serverUi = [
-  {"type": "Text", "title": "Hoş Geldiniz"},
-  {"type": "TextField", "hint": "E-mail", "color": Colors.amber},
-  {"type": "TextField", "hint": "Password", "color": Colors.red},
+final List<Map<String, dynamic>> serverUi = [
   {
-    "type": "Button",
-    "height": 50,
-    "color": Colors.blue,
-    "title": "Giriş Yap",
+    "type": "column",
+    "children": [
+      {
+        "type": "text",
+        "value": "Welcome Back!",
+        "style": {"fontSize": 28.0, "fontWeight": "bold"},
+      },
+      {
+        "type": "text",
+        "value": "Please login to continue",
+        "style": {"fontSize": 16.0, "color": 0xFF888888},
+      },
+      {"type": "textfield", "hint": "Email"},
+      {"type": "textfield", "hint": "Password", "obscure": true},
+      {"type": "button", "title": "Login"},
+      {"type": "button", "title": "Register", "isSecondary": true},
+    ],
   },
 ];
 
-
-Bu yapı uygulama içinde dinamik olarak UI’ya dönüştürülür.
-
-🛠️ Dinamik UI Oluşturma Mantığı
-List<Widget> ui = [];
-for (var item in serverUi) {
-  switch (item["type"]) {
-    case "Text":
-      ui.add(Text(item["title"]));
-      break;
-
-    case "TextField":
-      ui.add(
-        TextField(
-          decoration: InputDecoration(
-            hintText: item["hint"],
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: item["color"]),
-            ),
-          ),
-        ),
-      );
-      break;
-
-    case "Button":
-      ui.add(
-        SizedBox(
-          height: item["height"] ?? 50,
-          width: double.infinity,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: item["color"]),
-            onPressed: () {},
-            child: Text(item["title"]),
-          ),
-        ),
-      );
-      break;
-  }
-}
